@@ -1,7 +1,7 @@
 package main
 
 import (
-	"authentication/data"
+	"auth/data"
 	"database/sql"
 	"fmt"
 	"log"
@@ -14,29 +14,32 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
-const webPort = "8080"
+const webPort = "80"
+
+var counts int64
 
 type Config struct {
-	DB     *sql.DB
+	DB *sql.DB
 	Models data.Models
 }
 
 func main() {
-	log.Printf("Starting authentication service")
+	log.Println("Starting authentication service")
 
-	db := connectToDB()
-	if db == nil {
-		log.Panic("Can't connect to Postgres")
+	// connect to DB
+	conn := connectToDB()
+	if conn == nil {
+		log.Panic("Can't connect to Postgres!")
 	}
 
 	// set up config
 	app := Config{
-		DB:     db,
-		Models: data.New(db),
+		DB: conn,
+		Models: data.New(conn),
 	}
 
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%s", webPort),
+		Addr: fmt.Sprintf(":%s", webPort),
 		Handler: app.routes(),
 	}
 
@@ -44,7 +47,6 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-
 }
 
 func openDB(dsn string) (*sql.DB, error) {
@@ -63,24 +65,24 @@ func openDB(dsn string) (*sql.DB, error) {
 
 func connectToDB() *sql.DB {
 	dsn := os.Getenv("DSN")
-	count := 0
 
 	for {
 		connection, err := openDB(dsn)
 		if err != nil {
-			log.Println("Postgres not yet ready...")
-			count++
+			log.Println("Postgres not yet ready ...")
+			counts++
 		} else {
-			log.Println("Connected to Postgres")
+			log.Println("Connected to Postgres!")
 			return connection
 		}
 
-		if count > 10 {
+		if counts > 10 {
 			log.Println(err)
 			return nil
 		}
 
-		log.Println("Backing off for 2 seconds")
+		log.Println("Backing off for two seconds....")
 		time.Sleep(2 * time.Second)
+		continue
 	}
 }
