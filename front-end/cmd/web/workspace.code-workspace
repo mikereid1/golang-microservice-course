@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "../../../broker-service"
+        },
+        {
+            "path": "../.."
+        },
+        {
+            "path": "../../../project"
+        },
+        {
+            "path": "../../../authentication-service"
+        }
+    ]
+}
