@@ -25,7 +25,7 @@ func main() {
 	log.Printf("Starting authentication service")
 
 	db := connectToDB()
-	if conn == nil {
+	if db == nil {
 		log.Panic("Can't connect to Postgres")
 	}
 
