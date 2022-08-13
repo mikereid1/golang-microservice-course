@@ -82,10 +82,10 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 		return
 	}
 
-	var payload = jsonResponse {
-		Error: false,
-		Message: "Authenticated!"
-		Data: jsonFromSerice.Data
+	var payload = jsonResponse{
+		Error:   false,
+		Message: "Authenticated!",
+		Data:    jsonFromService.Data,
 	}
 
 	app.writeJSON(w, http.StatusAccepted, payload)
