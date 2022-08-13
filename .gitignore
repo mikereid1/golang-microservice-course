@@ -1,6 +1,7 @@
 authentication-service/authApp
 broker-service/brokerApp
 logger-service/loggerApp
+mail-service/mailerApp
 front-end/frontApp
 project/db-data
 .idea/
