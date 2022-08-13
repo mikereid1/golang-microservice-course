@@ -1,5 +1,6 @@
-front-end/frontApp
-broker-service/brokerApp
 authentication-service/authApp
+broker-service/brokerApp
+logger-service/loggerApp
+front-end/frontApp
 project/db-data
 .idea/
