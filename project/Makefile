@@ -2,6 +2,9 @@ FRONT_END_BINARY=frontApp
 BROKER_BINARY=brokerApp
 AUTH_BINARY=authApp
 
+## run: builds all containers and starts backend and frontend
+run: down stop up_build start
+
 ## up: starts all containers in the background without forcing build
 up:
 	@echo "Starting Docker images..."
