@@ -187,7 +187,7 @@ func (app *Config) logEventViaRabbit(w http.ResponseWriter, l LogPayload) {
 }
 
 func (app *Config) pushToQueue(name string, message string) error {
-	emmiter, err := event.NewEventEmitter(app.Rabbit)
+	emitter, err := event.NewEventEmitter(app.Rabbit)
 	if err != nil {
 		return err
 	}
@@ -198,7 +198,7 @@ func (app *Config) pushToQueue(name string, message string) error {
 	}
 
 	j, _ := json.MarshalIndent(&payload, "", "\t")
-	err = emmiter.Push(string(j), "log.INFO")
+	err = emitter.Push(string(j), "log.INFO")
 	if err != nil {
 		return err
 	}
